@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+void bfs_shortestPath(int source, int destination, vector<vector<int>>& graph, vector<int>& dist,
+                      vector<int>& parent) {
+    queue<int> q;
+    q.push(source);
+    dist[source] = 0;
+    parent[source] = -1;
+
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+
+        for (int i : graph[u]) {
+            if (dist[i] == INT_MAX) {
+                dist[i] = dist[u] + 1;
+                parent[i] = u;
+                q.push(i);
+
+                if (i == destination)
+                    return;
+            }
+        }
+    }
+}
+int main() {
+    int nodes, edges;
+    cin >> nodes >> edges;
+
+    vector<vector<int>> graph(nodes);
+    vector<bool> visited(nodes,INT_MAX);
+    vector<int> dist(nodes, false);
+    vector<int> parent(nodes, -1);
+
+    for (int i = 0; i < edges; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+
+    int source, destination;
+
+    cin >> source>>destination;
+    cout<< "visited order";
+    bfs(source,graph,visited);
+    cout<<endl;
+    bfs_shortestPath(source, destination,graph, dist,parent);
+    return 0;
+}
