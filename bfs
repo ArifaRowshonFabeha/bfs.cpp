@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+void bfs(int source, vector<vector<int>> &graph, vector<bool> &visited)
+{
+	queue<int> q;
+	q.push(source);
+	visited[source] = true;
+
+	while(!q.empty())
+	{
+		int u = q.front();
+		q.pop();
+		cout << u << " ";
+
+		for(int i : graph[u])
+		{
+			if(!visited[i])
+			{
+				visited[i] = true;
+				q.push(i);
+			}
+		}
+	}
+}
+
+int main() {
+    int nodes,edges;
+    cin>>nodes>>edges;
+    
+	vector<vector<int>> graph(nodes);
+	vector<bool> visited(nodes, false);
+	
+    for(int i =0;i<edges;i++){
+        int u,v;
+        cin>>u>>v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+
+    }
+    
+	int source, destination;
+
+	cin >> source;
+
+	bfs(source, graph,visited);
+    return 0;
+}
